@@ -12,11 +12,12 @@ class ReferralRequestService
      * @throws GuzzleException
      */
     public function pushReferralRequest(){
+        $auth_token = env('GUZZLE_AUTH');
 
         $client = new Client();
         $headers = [
             'Content-Type' => 'application/json',
-            'Authorization' => 'Basic ZmhpcnVzZXI6Y2hhbmdlLXBhc3N3b3Jk'
+            'Authorization' => 'Basic '.$auth_token
         ];
         $body = '{
                   "resourceType": "ServiceRequest",
@@ -142,11 +143,11 @@ class ReferralRequestService
     public function pushReferralRequestTrial()
     {
 
-
+        $auth_token = env('GUZZLE_AUTH');
         $client = new Client();
         $headers = [
             'Content-Type' => 'application/json',
-            'Authorization' => 'Basic ZmhpcnVzZXI6Y2hhbmdlLXBhc3N3b3Jk'
+            'Authorization' => 'Basic '.$auth_token
         ];
         $body = '{
                   "resourceType": "ServiceRequest",
