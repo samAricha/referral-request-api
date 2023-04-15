@@ -3,12 +3,143 @@
 namespace App\utils;
 
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Exception\GuzzleException;
 
 class ReferralRequestService
 {
 
-    public function pushReferral()
+    /**
+     * @throws GuzzleException
+     */
+    public function pushReferralRequest(){
+
+        $client = new Client();
+        $headers = [
+            'Content-Type' => 'application/json',
+            'Authorization' => 'Basic ZmhpcnVzZXI6Y2hhbmdlLXBhc3N3b3Jk'
+        ];
+        $body = '{
+                  "resourceType": "ServiceRequest",
+                  "identifier": [
+                    {
+                      "system": "http://example.com/identifiers",
+                      "value": "12345"
+                    }
+                  ],
+                  "basedOn": [
+                    {
+                      "reference": "CarePlan/123"
+                    }
+                  ],
+                  "status": "active",
+                  "intent": "order",
+                  "category": [
+                    {
+                      "coding": [
+                        {
+                          "system": "http://example.com/categories",
+                          "code": "lab"
+                        }
+                      ],
+                      "text": "Laboratory Test"
+                    }
+                  ],
+                  "priority": "routine",
+                  "code": {
+                    "coding": [
+                      {
+                        "system": "http://example.com/procedures",
+                        "code": "blood-test",
+                        "display": "Blood Test"
+                      }
+                    ],
+                    "text": "Blood Test"
+                  },
+                  "subject": {
+                    "reference": "Patient/123"
+                  },
+                  "encounter": {
+                    "reference": "Encounter/123"
+                  },
+                  "occurrenceDateTime": "2023-04-14T10:30:00+00:00",
+                  "requester": {
+                    "reference": "Practitioner/123"
+                  },
+                  "performer": [
+                    {
+                      "reference": "Practitioner/456"
+                    }
+                  ],
+                  "reasonCode": [
+                    {
+                      "coding": [
+                        {
+                          "system": "http://example.com/reasons",
+                          "code": "symptoms",
+                          "display": "Symptoms"
+                        }
+                      ],
+                      "text": "Patient is experiencing flu-like symptoms"
+                    }
+                  ],
+                  "supportingInfo": [
+                    {
+                      "reference": "https://shr.go.ke/34567823H"
+                    },
+                    {
+                      "reference": "https://shr.go.ke/34567823H"
+                    },
+                    {
+                      "reference": "https://shr.go.ke/34567823H"
+                    },
+                    {
+                      "reference": "https://shr.go.ke/34567823H",
+                      "display": "Care Plan for Patient",
+                      "type": "CarePlan",
+                      "identifier": {
+                        "system": "http://example.com/identifiers",
+                        "value": "12345"
+                      }
+                    }
+                  ],
+                  "note": [
+                    {
+                      "text": "Patient fasting for 12 hours prior to blood test"
+                    }
+                  ],
+                  "patientInstruction": "Please arrive at the lab fasting for at least 12 hours before the appointment",
+                  "relevantHistory": [
+                    {
+                      "reference": "Provenance/123"
+                    }
+                  ]
+                }';
+        $response = $client->post('https://interoperabilitylab.uonbi.ac.ke/test/fhir-server/api/v4/ServiceRequest', [
+            'headers' => $headers,
+            'body' => $body
+        ]);
+
+
+        return $response->getBody();
+
+
+
+//        $request = new Request('GET', '', $headers, $body);
+//        $res = $client->sendAsync($request)->wait();
+//        echo $res->getBody();
+
+
+    }
+
+
+
+
+
+
+
+
+
+    public function pushReferralRequestTrial()
     {
 
 

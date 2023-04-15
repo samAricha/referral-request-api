@@ -10,8 +10,7 @@ class ReferralController extends Controller
 
     public function sendReferralRequest(){
         $referralRequestService = new ReferralRequestService();
-       return $referralRequestService->pushReferral();
+       return $referralRequestService->pushReferralRequest();
 
-//        return response()->json()
     }
 }
